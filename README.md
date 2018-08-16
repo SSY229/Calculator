@@ -14,5 +14,5 @@ This calculator able to let user perform basic calculation, including add, subtr
 This application limits the number input and allow only one calculation per time
 
 ## Contribution
-1. How to build an HTML calculator app from scratch using JavaScript （https://medium.freecodecamp.org/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98）
+1. [How to build an HTML calculator app from scratch using JavaScript ](https://medium.freecodecamp.org/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98)
 
