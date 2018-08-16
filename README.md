@@ -5,11 +5,15 @@ A simple calculator web app is created using HTML, CSS and Javascript. This app 
 
 ## How to run?
 1. You can download .zip file, unzip and double click calculator.html file.
-2. Click open in Desktop
+2. Click open in Desktop on browser such as Chrome, Firefox, IE..
 
-## Advantages
-This calculator able to let user perform basic calculation, including add, subtract, multiply, divide and equals.
+## Features
+This calculator able to let user perform basic calculation, including add, subtract, multiply and divide.
 
 ## Limitations
-This calculator only can add/subtract/multiply/divide by two numbers.
+This application limits the number input and allow only one calculation per time
 
+## Contribution
+1. [How to build an HTML calculator app from scratch using JavaScript ](https://medium.freecodecamp.org/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98)
+
+2. [Javascript Calculator](https://codepen.io/giana/pen/GJMBEv)
