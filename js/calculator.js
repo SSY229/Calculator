@@ -1,38 +1,32 @@
-/*
-TODO:
-    Limit number input
-    Disallow . from being entered multiple times
-    Clean up structure
-*/
 
 (function() {
   "use strict";
 
-  // Shortcut to get elements
+  // Get elements
   var el = function(element) {
     if (element.charAt(0) === "#") { // If passed an ID...
       return document.querySelector(element); // ... returns single element
     }
 
-    return document.querySelectorAll(element); // Otherwise, returns a nodelist
+    return document.querySelectorAll(element); // Else, returns a nodelist
   };
 
   // Variables
-  var viewer = el("#viewer"), // Calculator screen where result is displayed
+  var viewer = el("#viewer"), // Calculator screen
     equals = el("#equals"), // Equal button
     nums = el(".num"), // List of numbers
     ops = el(".ops"), // List of operators
     theNum = "", // Current number
     oldNum = "", // First number
     resultNum, // Result
-    operator; // Batman
+    operator; // + - * /
 
-  // When: Number is clicked. Get the current number selected
+  // When a number is clicked, get the number
   var setNum = function() {
     if (resultNum) { // If a result was displayed, reset number
       theNum = this.getAttribute("data-num");
       resultNum = "";
-    } else { // Otherwise, add digit to previous number (this is a string!)
+    } else { // Else, add digit to previous number (this is a string)
       theNum += this.getAttribute("data-num");
     }
 
@@ -40,16 +34,16 @@ TODO:
 
   };
 
-  // When: Operator is clicked. Pass number to oldNum and save operator
+  // When click the operator, pass number to oldNum and save operator
   var moveNum = function() {
     oldNum = theNum;
     theNum = "";
     operator = this.getAttribute("data-ops");
 
-    equals.setAttribute("data-result", ""); // Reset result in attr
+    equals.setAttribute("data-result", ""); // Reset result in attribute
   };
 
-  // When: Equals is clicked. Calculate result
+  // When click equal, calculate result
   var displayNum = function() {
 
     // Convert string input to numbers
@@ -74,7 +68,7 @@ TODO:
         resultNum = oldNum / theNum;
         break;
 
-        // If equal is pressed without an operator, keep number and continue
+        // Keep resultNum as current number
       default:
         resultNum = theNum;
     }
@@ -90,17 +84,17 @@ TODO:
       }
     }
 
-    // Display result, finally!
+    // Display result
     viewer.innerHTML = resultNum;
     equals.setAttribute("data-result", resultNum);
 
-    // Now reset oldNum & keep result
+    // Reset oldNum & keep result
     oldNum = 0;
     theNum = resultNum;
 
   };
 
-  // When: Clear button is pressed. Clear everything
+  // When click clear button, clear everyting
   var clearAll = function() {
     oldNum = "";
     theNum = "";
