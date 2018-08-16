@@ -11,5 +11,5 @@ A simple calculator web app is created using HTML, CSS and Javascript. This app 
 This calculator able to let user perform basic calculation, including add, subtract, multiply, divide and equals.
 
 ## Limitations
-This calculator only can add/subtract/multiply/divide by two numbers.
+This application limits the number input and allow only one calculation per time
 
