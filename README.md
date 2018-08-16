@@ -3,7 +3,11 @@ A simple calculator web app is created using HTML, CSS and Javascript. This app 
 
 ![calculator](https://user-images.githubusercontent.com/22289585/44197843-62c19e80-a172-11e8-8542-430b5d525de7.JPG)
 
+## How to run?
+1. You can download .zip file, unzip and double click calculator.html file.
+
 ## Advantages
+This calculator able to let user perform basic calculation, including add, subtract, multiply, divide and equals.
 
 ## Limitations
 This calculator only can add/subtract/multiply/divide by two numbers.
