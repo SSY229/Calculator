@@ -24,20 +24,31 @@
 	  opCount = "";  // Count of operator sign click;
 
   // When a number is clicked, get the number
-  var setNum = function() {
-    if (resultNum) { // If a result was displayed, reset number
-        theNum = this.getAttribute("data-num");
-        resultNum = "";
-        opCount = "";
-        decCount = "";
-    } else { // Else, add digit to previous number (this is a string)
-      theNum += this.getAttribute("data-num");
-    }
-    
-      theNum = parseFloat(theNum); //Convert string to float number (handle 022, .2, 0002)
-      viewer.innerHTML = theNum; // Display current number
+  var setNum = function () {
 
-  };
+    if (resultNum) { // If a result was displayed, reset number
+
+        if (theNum) { // If there is current number entered, append it
+            theNum += this.getAttribute("data-num"); // add digit input
+            resultNum = ""; //reset result 
+        }
+        else {  //Otherwise get new input
+            theNum = this.getAttribute("data-num");  
+            resultNum = "";
+        }
+
+    } else { // Otherwise, add digit to previous number (this is a string!)
+
+        theNum += this.getAttribute("data-num");
+    }
+    if (decCount) { //If there is decimal click before 
+        viewer.innerHTML = theNum; // Display current number
+    }
+    else { // Otherwise convert number (in string) to float 
+        theNum = parseFloat(theNum); //Convert string to float number (handle 022, .2, 0002)
+        viewer.innerHTML = theNum; // Display current number
+    }
+};
 
 // When: decimal point is clicked. 
 var decPoint = function () {
@@ -71,7 +82,7 @@ var decPoint = function () {
   var moveNum = function () {
 
     if (opCount) {  //If operator is clicked before
-  decCount = "";  //Reset decimal count
+        decCount = "";  //Reset decimal count
         operator = this.getAttribute("data-ops");  //Get the click property and overwrite the operator before
     }
     else { //Otherwise save the current number to first number and get operator property
@@ -137,19 +148,12 @@ var decPoint = function () {
     // Now reset oldNum, decimal count, operator count & keep result
     oldNum = 0;
     opCount = "";
-    if (resultNum.includes('.')){
-        decCount++;
-    }
-    else{
-        decCount = "";
-    }
     theNum = resultNum;
-
   };
 
   // When click clear button, clear everyting
   var clearAll = function() {
-    oldNum = "";
+        oldNum = "";
         theNum = "";
         decCount = "";
         opCount = "";
