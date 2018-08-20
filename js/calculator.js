@@ -20,52 +20,98 @@
     oldNum = "", // First number
     resultNum, // Result
     operator; // + - * /
+    decCount = "", // Count of decimal click
+	  opCount = "";  // Count of operator sign click;
 
   // When a number is clicked, get the number
   var setNum = function() {
     if (resultNum) { // If a result was displayed, reset number
-      theNum = this.getAttribute("data-num");
-      resultNum = "";
+        theNum = this.getAttribute("data-num");
+        resultNum = "";
+        opCount = "";
+        decCount = "";
     } else { // Else, add digit to previous number (this is a string)
       theNum += this.getAttribute("data-num");
     }
-
-    viewer.innerHTML = theNum; // Display current number
+    
+      theNum = parseFloat(theNum); //Convert string to float number (handle 022, .2, 0002)
+      viewer.innerHTML = theNum; // Display current number
 
   };
+
+// When: decimal point is clicked. 
+var decPoint = function () {
+
+  var decNum = this.getAttribute("decNum"); //Get the click property
+
+  if (decCount) { //If decimal point is clicked before (to allow only one decimal click per digit)
+      viewer.innerHTML = theNum; // Display current number
+  }
+  else {  //Otherwise 
+
+      if (theNum != "0" && decNum == "." && theNum != "") { 
+//Get the decimal number (>=1) if the current number is not '0' and null when decimal is clicked
+          theNum = theNum + "."; 
+      }
+      else if (decNum == "." || theNum == "0") { 
+//Get the decimal number (<1) if the current number is '0' when decimal is clicked
+          theNum = "0" + ".";
+      }
+      else {
+          theNum = theNum + ".";
+      }
+      viewer.innerHTML = theNum; // Display current number
+  }
+
+  decCount++; // To increase the count of decimal click, showing there is clicked before
+
+};
 
   // When click the operator, pass number to oldNum and save operator
-  var moveNum = function() {
-    oldNum = theNum;
-    theNum = "";
-    operator = this.getAttribute("data-ops");
+  var moveNum = function () {
 
+    if (opCount) {  //If operator is clicked before
+  decCount = "";  //Reset decimal count
+        operator = this.getAttribute("data-ops");  //Get the click property and overwrite the operator before
+    }
+    else { //Otherwise save the current number to first number and get operator property
+        oldNum = theNum;  
+        theNum = "";
+        decCount = "";
+        operator = this.getAttribute("data-ops");
+    }
+
+    opCount++; // To increase the count of operator click, showing there is clicked before
     equals.setAttribute("data-result", ""); // Reset result in attribute
-  };
+};
 
   // When click equal, calculate result
   var displayNum = function() {
 
     // Convert string input to numbers
-    oldNum = parseFloat(oldNum);
     theNum = parseFloat(theNum);
+    oldNum = parseFloat(oldNum);
 
     // Perform operation
     switch (operator) {
       case "plus":
         resultNum = oldNum + theNum;
+        resultNum = parseFloat(parseFloat(resultNum).toFixed(10));
         break;
 
       case "minus":
         resultNum = oldNum - theNum;
+        resultNum =  Math.round(eval(resultNum)*1000000)/1000000;
         break;
 
       case "times":
         resultNum = oldNum * theNum;
+        resultNum =  Math.round(eval(resultNum)*1000000)/1000000; 
         break;
 
       case "divided by":
         resultNum = oldNum / theNum;
+        resultNum = parseFloat(parseFloat(resultNum).toFixed(10));
         break;
 
         // Keep resultNum as current number
@@ -84,11 +130,19 @@
     }
 
     // Display result
-    viewer.innerHTML = resultNum;
-    equals.setAttribute("data-result", resultNum);
+        resultNum = resultNum.toString();
+        viewer.innerHTML = resultNum;
+        equals.setAttribute("data-result", resultNum);
 
-    // Reset oldNum & keep result
+    // Now reset oldNum, decimal count, operator count & keep result
     oldNum = 0;
+    opCount = "";
+    if (resultNum.includes('.')){
+        decCount++;
+    }
+    else{
+        decCount = "";
+    }
     theNum = resultNum;
 
   };
@@ -96,9 +150,12 @@
   // When click clear button, clear everyting
   var clearAll = function() {
     oldNum = "";
-    theNum = "";
-    viewer.innerHTML = "0";
-    equals.setAttribute("data-result", resultNum);
+        theNum = "";
+        decCount = "";
+        opCount = "";
+        operator = "";
+        viewer.innerHTML = "0";
+        equals.setAttribute("data-result", resultNum);
   };
 
   /* The click events */
@@ -115,6 +172,9 @@
 
   // Add click event to equal sign
   equals.onclick = displayNum;
+
+  // Add click event to decimal button
+  el("#dec").onclick = decPoint;
 
   // Add click event to clear button
   el("#clear").onclick = clearAll;
