@@ -148,6 +148,12 @@ var decPoint = function () {
     // Now reset oldNum, decimal count, operator count & keep result
     oldNum = 0;
     opCount = "";
+    if (resultNum.includes('.')){
+      decCount++;
+  }
+  else{
+      decCount = "";
+  }
     theNum = resultNum;
   };
 
