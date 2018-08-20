@@ -19,7 +19,7 @@
     theNum = "", // Current number
     oldNum = "", // First number
     resultNum, // Result
-    operator; // + - * /
+    operator, // + - * /
     decCount = "", // Count of decimal click
 	  opCount = "";  // Count of operator sign click;
 
